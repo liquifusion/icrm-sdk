@@ -1,0 +1,1 @@
+Put the com folder and it's entire contents along with the documentation.cfm under a coldfusion website at the root.
