@@ -1,5 +1,5 @@
 <cfcomponent output="false">
 	
-	<cfset this.name = "Coldfusion Infusionsoft SDK" />
+	<cfset this.name = "ColdFusion Infusionsoft SDK" />
 	
 </cfcomponent>
