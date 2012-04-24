@@ -914,6 +914,74 @@
 	</cffunction>
 	
 	<!----------------------------------------------------------------------------------------------------------------------------
+		API SEARCH SERVICE - http://help.infusionsoft.com/api-docs/searchservice
+	----------------------------------------------------------------------------------------------------------------------------->
+
+	<cffunction name="getAllReportColumns" output="false" access="public" returntype="query" hint="http://www.infusionsoft.com/fusebox/api/SearchService.html##getAllReportColumns(java.lang.String, int, int)">
+		<cfargument name="savedSearchId" required="true" type="numeric" />
+		<cfargument name="userId" required="true" type="numeric" />
+		<cfset var loc = StructNew() />
+		
+		<cfset loc.array = ArrayNew(1) />
+		<cfset ArrayAppend(loc.array, JavaCast('int', arguments.savedSearchId)) />
+		<cfset ArrayAppend(loc.array, JavaCast('int', arguments.UserId)) />
+	
+		<cfreturn this.call("SearchService.getAllReportColumns", loc.array, "Query") />
+	</cffunction>
+
+	<cffunction name="getSavedSearchResultsAllFields" output="false" access="public" returntype="query" hint="http://www.infusionsoft.com/fusebox/api/SearchService.html##getSavedSearchResultsAllFields(java.lang.String, int, int, int)">
+		<cfargument name="savedSearchId" required="true" type="numeric" />
+		<cfargument name="userId" required="true" type="numeric" />
+		<cfargument name="pageNumber" required="true" type="numeric" />
+		<cfset var loc = StructNew() />
+		
+		<cfset loc.array = ArrayNew(1) />
+		<cfset ArrayAppend(loc.array, JavaCast('int', arguments.savedSearchId)) />
+		<cfset ArrayAppend(loc.array, JavaCast('int', arguments.UserId)) />
+		<cfset ArrayAppend(loc.array, JavaCast('int', arguments.pageNumber)) />
+	
+		<cfreturn this.call("SearchService.getSavedSearchResultsAllFields", loc.array, "Query") />
+	</cffunction>
+	
+	<cffunction name="getAvailableQuickSearches" output="false" access="public" returntype="query" hint="http://www.infusionsoft.com/fusebox/api/SearchService.html##getAvailableQuickSearches(java.lang.String, int)">
+		<cfargument name="userId" required="true" type="numeric" />
+		<cfset var loc = StructNew() />
+		
+		<cfset loc.array = ArrayNew(1) />
+		<cfset ArrayAppend(loc.array, JavaCast('int', arguments.UserId)) />
+	
+		<cfreturn this.call("SearchService.getAvailableQuickSearches", loc.array, "Query") />
+	</cffunction>
+	
+	<cffunction name="quickSearch" output="false" access="public" returntype="query" hint="http://www.infusionsoft.com/fusebox/api/SearchService.html##quickSearch(java.lang.String, java.lang.String, int, java.lang.String, int, int)">
+		<cfargument name="quickSearchType" required="true" type="string">
+		<cfargument name="userId" required="true" type="numeric" />
+		<cfargument name="searchData" required="true" type="string">
+		<cfargument name="page" required="true" type="numeric" />
+		<cfargument name="returnLimit" required="true" type="numeric" />
+		<cfset var loc = StructNew() />
+		
+		<cfset loc.array = ArrayNew(1) />
+		<cfset ArrayAppend(loc.array, JavaCast('string', arguments.quickSearchType)) />
+		<cfset ArrayAppend(loc.array, JavaCast('int', arguments.UserId)) />
+		<cfset ArrayAppend(loc.array, JavaCast('string', arguments.searchData)) />
+		<cfset ArrayAppend(loc.array, JavaCast('int', arguments.page)) />
+		<cfset ArrayAppend(loc.array, JavaCast('int', arguments.returnLimit)) />
+		
+		<cfreturn this.call("SearchService.quickSearch", loc.array, "Query") />
+	</cffunction>
+	
+	<cffunction name="getDefaultQuickSearch" output="false" access="public" returntype="query" hint="http://www.infusionsoft.com/fusebox/api/SearchService.html##getDefaultQuickSearch(java.lang.String, int)">
+		<cfargument name="userId" required="true" type="numeric" />
+		<cfset var loc = StructNew() />
+		
+		<cfset loc.array = ArrayNew(1) />
+		<cfset ArrayAppend(loc.array, JavaCast('int', arguments.UserId)) />
+	
+		<cfreturn this.call("SearchService.getDefaultQuickSearch", loc.array, "Query") />
+	</cffunction>
+	
+	<!----------------------------------------------------------------------------------------------------------------------------
 		PRIVATE METHODS
 	----------------------------------------------------------------------------------------------------------------------------->
 	
