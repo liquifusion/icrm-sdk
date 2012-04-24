@@ -854,63 +854,71 @@
 	</cffunction>
 	
 	<!----------------------------------------------------------------------------------------------------------------------------
-		TICKET SERVICE
+		API SEARCH SERVICE - http://help.infusionsoft.com/api-docs/searchservice
 	----------------------------------------------------------------------------------------------------------------------------->
 
-	<cffunction name="addMoveNotes" output="false" access="public" returntype="boolean" hint="http://www.infusionsoft.com/fusebox/api/ServiceCallService.html##addMoveNotes(java.lang.String, java.lang.String[], java.lang.String, int, java.lang.String[])">
-		<cfargument name="ticketIds" required="true" type="array" />
-		<cfargument name="moveNotes" required="true" type="string" />
-		<cfargument name="moveToStageId" required="true" type="numeric" />
-		<cfargument name="notifyIds" required="true" type="array" />
-		<cfset var loc = StructNew() />
-		
-		<cfset loc.array = ArrayNew(1) />
-		<cfset ArrayAppend(loc.array, $javaCastArray(arguments.ticketIds, "string")) />
-		<cfset ArrayAppend(loc.array, JavaCast("string", arguments.moveNotes)) />
-		<cfset ArrayAppend(loc.array, JavaCast("int", arguments.moveToStageId)) />
-		<cfset ArrayAppend(loc.array, $javaCastArray(arguments.notifyIds, "string")) />
-	
-		<cfreturn this.call("ServiceCallService.addMoveNotes", loc.array) />
-	</cffunction>
-
-	<cffunction name="moveTicketStage" output="false" access="public" returntype="boolean" hint="http://www.infusionsoft.com/fusebox/api/ServiceCallService.html##moveTicketStage(java.lang.String, int, int, java.lang.String, java.lang.String[])">
-		<cfargument name="ticketId" required="true" type="numeric" />
-		<cfargument name="ticketStage" required="true" type="numeric" />
-		<cfargument name="moveNotes" required="true" type="string" />
-		<cfargument name="notifyIds" required="true" type="array" />
-		<cfset var loc = StructNew() />
-		
-		<cfset loc.array = ArrayNew(1) />
-		<cfset ArrayAppend(loc.array, JavaCast("int", arguments.ticketId)) />
-		<cfset ArrayAppend(loc.array, JavaCast("int", arguments.ticketStage)) />
-		<cfset ArrayAppend(loc.array, JavaCast("string", arguments.moveNotes)) />
-		<cfset ArrayAppend(loc.array, $javaCastArray(arguments.notifyIds, "string")) />
-	
-		<cfreturn this.call("ServiceCallService.moveTicketStage", loc.array) />
-	</cffunction>
-
-	<cffunction name="reportIssue" output="false" access="public" returntype="numeric" hint="http://www.infusionsoft.com/fusebox/api/ServiceCallService.html##reportIssue(java.lang.String, java.lang.String, int, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)">
-		<cfargument name="type" required="true" type="string" />
+	<cffunction name="getAllReportColumns" output="false" access="public" returntype="query" hint="http://www.infusionsoft.com/fusebox/api/SearchService.html##getAllReportColumns(java.lang.String, int, int)">
+		<cfargument name="savedSearchId" required="true" type="numeric" />
 		<cfargument name="userId" required="true" type="numeric" />
-		<cfargument name="title" required="true" type="string" />
-		<cfargument name="activity" required="true" type="string" />
-		<cfargument name="desiredOutcome" required="true" type="string" />
-		<cfargument name="actualOutcome" required="true" type="string" />
-		<cfargument name="stackTrace" required="true" type="string" />
-		<cfargument name="clickSteps" required="true" type="string" />
 		<cfset var loc = StructNew() />
 		
 		<cfset loc.array = ArrayNew(1) />
-		<cfset ArrayAppend(loc.array, JavaCast("string", arguments.type)) />
-		<cfset ArrayAppend(loc.array, JavaCast("int", arguments.userId)) />
-		<cfset ArrayAppend(loc.array, JavaCast("string", arguments.title)) />
-		<cfset ArrayAppend(loc.array, JavaCast("string", arguments.activity)) />
-		<cfset ArrayAppend(loc.array, JavaCast("string", arguments.desiredOutcome)) />
-		<cfset ArrayAppend(loc.array, JavaCast("string", arguments.actualOutcome)) />
-		<cfset ArrayAppend(loc.array, JavaCast("string", arguments.stackTrace)) />
-		<cfset ArrayAppend(loc.array, JavaCast("string", arguments.clickSteps)) />
+		<cfset ArrayAppend(loc.array, JavaCast('int', arguments.savedSearchId)) />
+		<cfset ArrayAppend(loc.array, JavaCast('int', arguments.UserId)) />
 	
-		<cfreturn this.call("ServiceCallService.reportIssue", loc.array) />
+		<cfreturn this.call("SearchService.getAllReportColumns", loc.array, "Query") />
+	</cffunction>
+
+	<cffunction name="getSavedSearchResultsAllFields" output="false" access="public" returntype="query" hint="http://www.infusionsoft.com/fusebox/api/SearchService.html##getSavedSearchResultsAllFields(java.lang.String, int, int, int)">
+		<cfargument name="savedSearchId" required="true" type="numeric" />
+		<cfargument name="userId" required="true" type="numeric" />
+		<cfargument name="pageNumber" required="true" type="numeric" />
+		<cfset var loc = StructNew() />
+		
+		<cfset loc.array = ArrayNew(1) />
+		<cfset ArrayAppend(loc.array, JavaCast('int', arguments.savedSearchId)) />
+		<cfset ArrayAppend(loc.array, JavaCast('int', arguments.UserId)) />
+		<cfset ArrayAppend(loc.array, JavaCast('int', arguments.pageNumber)) />
+	
+		<cfreturn this.call("SearchService.getSavedSearchResultsAllFields", loc.array, "Query") />
+	</cffunction>
+	
+	<cffunction name="getAvailableQuickSearches" output="false" access="public" returntype="query" hint="http://www.infusionsoft.com/fusebox/api/SearchService.html##getAvailableQuickSearches(java.lang.String, int)">
+		<cfargument name="userId" required="true" type="numeric" />
+		<cfset var loc = StructNew() />
+		
+		<cfset loc.array = ArrayNew(1) />
+		<cfset ArrayAppend(loc.array, JavaCast('int', arguments.UserId)) />
+	
+		<cfreturn this.call("SearchService.getAvailableQuickSearches", loc.array, "Query") />
+	</cffunction>
+	
+	<cffunction name="quickSearch" output="false" access="public" returntype="query" hint="http://www.infusionsoft.com/fusebox/api/SearchService.html##quickSearch(java.lang.String, java.lang.String, int, java.lang.String, int, int)">
+		<cfargument name="quickSearchType" required="true" type="string">
+		<cfargument name="userId" required="true" type="numeric" />
+		<cfargument name="searchData" required="true" type="string">
+		<cfargument name="page" required="true" type="numeric" />
+		<cfargument name="returnLimit" required="true" type="numeric" />
+		<cfset var loc = StructNew() />
+		
+		<cfset loc.array = ArrayNew(1) />
+		<cfset ArrayAppend(loc.array, JavaCast('string', arguments.quickSearchType)) />
+		<cfset ArrayAppend(loc.array, JavaCast('int', arguments.UserId)) />
+		<cfset ArrayAppend(loc.array, JavaCast('string', arguments.searchData)) />
+		<cfset ArrayAppend(loc.array, JavaCast('int', arguments.page)) />
+		<cfset ArrayAppend(loc.array, JavaCast('int', arguments.returnLimit)) />
+		
+		<cfreturn this.call("SearchService.quickSearch", loc.array, "Query") />
+	</cffunction>
+	
+	<cffunction name="getDefaultQuickSearch" output="false" access="public" returntype="query" hint="http://www.infusionsoft.com/fusebox/api/SearchService.html##getDefaultQuickSearch(java.lang.String, int)">
+		<cfargument name="userId" required="true" type="numeric" />
+		<cfset var loc = StructNew() />
+		
+		<cfset loc.array = ArrayNew(1) />
+		<cfset ArrayAppend(loc.array, JavaCast('int', arguments.UserId)) />
+	
+		<cfreturn this.call("SearchService.getDefaultQuickSearch", loc.array, "Query") />
 	</cffunction>
 	
 	<!----------------------------------------------------------------------------------------------------------------------------
