@@ -854,6 +854,58 @@
 	</cffunction>
 	
 	<!----------------------------------------------------------------------------------------------------------------------------
+		PRODUCT SERVICE
+	----------------------------------------------------------------------------------------------------------------------------->
+	<cffunction name="getInventory" output="false" access="public" returntype="numeric" hint="http://help.infusionsoft.com/api-docs/productservice##getInventory" description="public function to retrieve the current inventory level for a specific product">
+        <cfargument name="productId" required="true" type="numeric" />
+        <cfset loc.array = ArrayNew(1) />
+		<cfset ArrayAppend(loc.array, JavaCast("int", arguments.productId)) />
+		<cfreturn Int(this.call("ProductService.getInventory", loc.array)) />
+	</cffunction>
+
+	<cffunction name="incrementInventory" output="false" access="public" returntype="numeric" hint="http://help.infusionsoft.com/api-docs/productservice##incrementInventory" description="public function to increment current inventory level by 1">
+        <cfargument name="productId" required="true" type="numeric" />
+        <cfset loc.array = ArrayNew(1) />
+		<cfset ArrayAppend(loc.array, JavaCast("int", arguments.productId)) />
+		<cfreturn Int(this.call("ProductService.incrementInventory", loc.array)) />
+	</cffunction>
+        
+    <cffunction name="decrementInventory" output="false" access="public" returntype="numeric" hint="http://help.infusionsoft.com/api-docs/productservice##decrementInventory" description="public function to decrement current inventory level by 1">
+     <cfargument name="productId" required="true" type="numeric" />
+        <cfset loc.array = ArrayNew(1) />
+		<cfset ArrayAppend(loc.array, JavaCast("int", arguments.productId)) />
+		<cfreturn Int(this.call("ProductService.decrementInventory", loc.array)) />
+	</cffunction>
+    
+        
+    <cffunction name="increaseInventory" output="false" access="public" returntype="numeric" hint="http://help.infusionsoft.com/api-docs/productservice##increaseInventory" description="public function increase Inventory($productId, $quantity)">
+     <cfargument name="productId" required="true" type="numeric" />
+     <cfargument name="quantity" required="true" type="numeric" />     
+        <cfset loc.array = ArrayNew(1) />
+		<cfset ArrayAppend(loc.array, JavaCast("int", arguments.productId)) />
+		<cfset ArrayAppend(loc.array, JavaCast("int", arguments.quantity)) />        
+		<cfreturn Int(this.call("ProductService.increaseInventory", loc.array)) />
+	</cffunction>
+    
+    <cffunction name="decreaseInventory" output="false" access="public" returntype="numeric" hint="http://help.infusionsoft.com/api-docs/productservice##decreaseInventory" description="public function decrease Inventory($productId, $quantity)">
+     <cfargument name="productId" required="true" type="numeric" />
+     <cfargument name="quantity" required="true" type="numeric" />     
+        <cfset loc.array = ArrayNew(1) />
+		<cfset ArrayAppend(loc.array, JavaCast("int", arguments.productId)) />
+		<cfset ArrayAppend(loc.array, JavaCast("int", arguments.quantity)) />        
+		<cfreturn Int(this.call("ProductService.decreaseInventory", loc.array)) />
+	</cffunction>    
+
+    <cffunction name="deactivateCreditCard" output="false" access="public" returntype="numeric" hint="http://help.infusionsoft.com/api-docs/productservice##decreaseInventory" description="public function decrease Inventory($productId, $quantity)">
+     <cfargument name="creditCardId" required="true" type="numeric" />
+        <cfset loc.array = ArrayNew(1) />
+		<cfset ArrayAppend(loc.array, JavaCast("int", arguments.creditCardId)) />
+		<cfreturn Int(this.call("ProductService.deactivateCreditCard", loc.array)) />
+	</cffunction>   
+            
+ 
+	
+	<!----------------------------------------------------------------------------------------------------------------------------
 		API SEARCH SERVICE - http://help.infusionsoft.com/api-docs/searchservice
 	----------------------------------------------------------------------------------------------------------------------------->
 
