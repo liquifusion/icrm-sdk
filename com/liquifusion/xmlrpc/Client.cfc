@@ -59,6 +59,7 @@
 	<cffunction name="call" output="false" access="public" returntype="string" hint="I take a well formed xml rpc request and send it off to a server for processing.">
 		<cfargument name="xmlToSend" type="string" required="true" />
 		<cfset var cfhttp = {} />
+		<cfset var cfhttpAttrs = {}>
 		
 		<!--- Only provide username and password if they are provided --->
 		<cfif Len(variables.user)>
