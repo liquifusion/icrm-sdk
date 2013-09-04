@@ -78,7 +78,7 @@
 		<cfif LCase(cfhttp.statusCode) neq "200 ok">
 		
 			<!--- if you don't succeed at first, try again --->
-			<cfhttp method="POST" url="#this.getUrl()#" throwonerror="false" timeout="#variables.timeout#" attributecollection="#cfhttpAttrs#">
+			<cfhttp method="POST" url="#this.getUrl()#" throwonerror="false" timeout="#variables.timeout#" username="#variables.user#" password="#variables.password#">
 				<cfhttpparam name="param1" value="#arguments.xmlToSend#" type="xml" />
 			</cfhttp>		
 		
