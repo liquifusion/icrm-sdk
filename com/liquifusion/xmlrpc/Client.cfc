@@ -60,8 +60,16 @@
 		<cfargument name="xmlToSend" type="string" required="true" />
 		<cfset var cfhttp = {} />
 		
+		<!--- Only provide username and password if they are provided --->
+		<cfif Len(variables.user)>
+			<cfset cfhttpAttrs.username = variables.user />
+		</cfif>
+		<cfif Len(variables.password)>
+			<cfset cfhttpAttrs.password = variables.password />
+		</cfif>
+
 		<!--- send it off --->
-		<cfhttp method="POST" url="#this.getUrl()#" throwonerror="false" timeout="#variables.timeout#" username="#variables.user#" password="#variables.password#">
+		<cfhttp method="POST" url="#this.getUrl()#" throwonerror="false" timeout="#variables.timeout#" attributecollection="#cfhttpAttrs#">
 			<cfhttpparam name="param1" value="#arguments.xmlToSend#" type="xml" />
 		</cfhttp>
 		
