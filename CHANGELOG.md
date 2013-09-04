@@ -8,6 +8,10 @@
   * added the resumeCampaignForContact method to the sdk
   * updated Sdk.cfc to access a timeout from the developer in case infusionsofts systems are down. Defaults to 5 seconds
 
+## v0.6.1   * 2013/09/04
+
+  * Fixed [#5][1] Error: [InvalidConfig]Invalid Configuration: for help setting up your API, please contact Support ( ext. 2) (empty)
+
 ## v0.6.0   * 2011/01/04
 
   * fixed the method getApplicationSetting() to work as expected
@@ -52,3 +56,6 @@
 ## v0.1.1   * 2009/06/22
 
   * Update to the Transform.cfc to make the object CF7 compatible. Removed the function IsInstanceOf() with  variable.getClass().isInstance().
+
+
+[1]: https://github.com/liquifusion/icrm-sdk/issues/5
