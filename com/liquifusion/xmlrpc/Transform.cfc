@@ -1,4 +1,4 @@
-<cfcomponent output="false">
+<cfcomponent displayname="Transform">
 
 	<cfset variables.instance = StructNew() />
 	<cfset variables.instance.string = JavaCast("string", "a string") />
@@ -72,7 +72,7 @@
 			<cfloop index="loc.x" from="1" to="#loc.length#">
 				<cfloop index="loc.y" from="1" to="#ArrayLen(loc.params[loc.x].xmlChildren)#">
 					<cfset loc.dump = QuerySetCell(loc.results.params[1], 
-												   Replace(this.deserialize(loc.params[loc.x].xmlChildren[loc.y].name), "_", "custom_", "all"), 
+												   variables.formatColumnName(this.deserialize(loc.params[loc.x].xmlChildren[loc.y].name)), 
 												   this.deserialize(loc.params[loc.x].xmlChildren[loc.y].value),
 												   loc.x) /> 
 				</cfloop>
@@ -275,14 +275,29 @@
 		<cfloop index="loc.y" from="1" to="#ArrayLen(loc.paramArray)#">
 			<cfset loc.members = loc.paramArray[loc.y].xmlChildren />
 			<cfloop index="loc.x" from="1" to="#ArrayLen(loc.members)#">
-				<cfif not ListFind(loc.results, Replace(Trim(loc.members[loc.x].name.xmlText), "_", "custom_", "all"))>
-					<cfset loc.results = ListAppend(loc.results, Replace(Trim(loc.members[loc.x].name.xmlText), "_", "custom_", "all")) />
+				<cfset columnName = variables.formatColumnName(loc.members[loc.x].name.xmlText)>
+				<cfif not ListFind(loc.results, columnName)>
+					
+					<cfset loc.results = ListAppend(loc.results, columnName) />
+					
 				</cfif>
 			</cfloop>		
 		</cfloop>
 
 		<cfreturn loc.results />
 	</cffunction>
+	
+	<cfscript>
+	function formatColumnName(name){
+		name = Replace(Trim(name), "_", "custom_", "all");
+		name = rereplace(Trim(name), "[!@##$%^&*()/+-]+", "_", "all");
+		if(isNumeric(left(name,1))){
+			name = "_" & name;
+		}
+		return name;
+	}
+	
+	</cfscript>
 	
 	<cffunction name="checkData" access="private" output="false" returntype="void">
 		<cfargument name="data" required="true" />
