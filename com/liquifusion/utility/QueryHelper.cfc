@@ -15,7 +15,17 @@
 		<cfset loc.length = ArrayLen(arguments.array) />
 		<cfset loc.columns = getQueryColumnNames(arguments.array) />
 		<cfset loc.columnLen = ArrayLen(loc.columns) />
-		<cfset loc.query = QueryNew(Replace(ArrayToList(loc.columns), "_", "custom_", "all")) />
+		<cfset loc.columnsForQuery = [] />
+		
+		<cfloop index="loc.i" from="1" to="#loc.columnLen#">
+			<cfset loc.workingColumn = rereplace(loc.columns[loc.i],"[!@##$%^&*()/+-]","_","all") />
+			<cfset loc.workingColumn = rereplace(loc.workingColumn,"^_","custom_","one") />
+			<cfset loc.workingColumn = rereplace(loc.workingColumn,"^(\d)","_\1","one") />
+			<cfset loc.dump = arrayAppend(loc.columnsForQuery,loc.workingColumn) />
+		</cfloop>
+		
+		<cfset loc.query = QueryNew(arrayToList(loc.ColumnsForQuery)) />
+
 		
 		<!--- add all of the row ahead of the loop --->
 		<cfset loc.dump = QueryAddRow(loc.query, loc.length)>
@@ -29,7 +39,7 @@
 					<cfif IsBinary(loc.struct[loc.columns[loc.y]])>
 						<cfset loc.struct[loc.columns[loc.y]] = ToBase64(loc.struct[loc.columns[loc.y]]) />
 					</cfif>
-					<cfset loc.dump = QuerySetCell(loc.query, Replace(loc.columns[loc.y], "_", "Custom_"), loc.struct[loc.columns[loc.y]], loc.x) /> 
+					<cfset loc.dump = QuerySetCell(loc.query,loc.columnsForQuery[loc.y], loc.struct[loc.columns[loc.y]], loc.x) /> 
 				</cfif>
 			</cfloop>
 		</cfloop>
